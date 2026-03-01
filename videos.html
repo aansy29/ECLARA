@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ÉCLARA – Music</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-wrapper">
+    <a href="index.html" class="logo">ÉCLARA</a>
+
+    <div class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="music.html">Albums</a></li>
+      <li><a href="videos.html">Music Videos</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<section class="video-hero">
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assets/videos/latest-mv.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
+
+    <div class="video-hero-text">
+        <h1>Music Videos</h1>
+    </div>
+</section>
+
+<section class="video-library">
+    <div class="container">
+
+        <h2>Album One</h2>
+
+  <div class="video-row">
+
+            <div class="video-card">
+                <iframe 
+                    src="https://www.youtube.com/embed/VIDEO_ID"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+                <p>Song Title</p>
+            </div>
+
+        </div>
+
+        <h2>Album Two</h2>
+
+  <div class="video-row">
+
+            <div class="video-card">
+                <iframe 
+                    src="https://www.youtube.com/embed/VIDEO_ID"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+                <p>Song Title</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
