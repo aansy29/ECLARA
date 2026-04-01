@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LOVE PULSE – ÉCLARA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    background-color: #ffffff;
+    color: #000;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.album-page {
+    padding: 20px;
+    padding-bottom: 180px; /* space for bottom player */
+}
+
+.album-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.album-cover {
+    width: 200px;
+    border-radius: 15px;
+}
+
+.tracklist {
+    max-width: 500px;
+    margin: auto;
+}
+
+.track {
+    display: flex;
+    align-items: center;
+    padding: 14px 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: 0.2s;
+    justify-content: space-between;
+}
+
+.track:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.track.active {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.track-number {
+    width: 30px;
+    color: #777;
+}
+
+.track-title {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.track-duration {
+    margin-left: 10px;   /* space from title */
+    margin-right: 15px;  /* space from play button */
+    font-size: 12px;
+    color: #555;
+    min-width: 35px;
+    text-align: right;
+}
+
+.play-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    color: #000;
+    transition: 0.2s;
+}
+
+/* BOTTOM PLAYER */
+.music-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 15px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.player-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.music-player img {
+    width: 50px;
+    border-radius: 8px;
+}
+
+.player-info {
+    flex: 1;
+}
+
+#player-title {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: #000;
+}
+
+/* TIME DISPLAY */
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+}
+
+/* CONTROL BUTTONS */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.controls svg {
+    width: 24px;
+    height: 24px;
+    fill: #000;
+    transition: 0.2s;
+}
+
+.controls button:hover svg {
+    fill: #555;
+}
+
+.play-btn-main svg {
+    width: 36px;
+    height: 36px;
+}
+</style>
+</head>
+<body>
+
+<section class="album-page">
+<div class="album-header">
+    <img src="love pulse ac.png" class="album-cover">
+    <h1>LOVE PULSE</h1>
+</div>
+
+<div class="tracklist">
+    <div class="track" data-src="Love, Maybe.mp3">
+        <span class="track-number">1</span>
+        <span class="track-title">Love, Maybe</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+    <div class="track" data-src="Midas touch.mp3">
+        <span class="track-number">2</span>
+        <span class="track-title">Midas Touch</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+    <div class="track" data-src="Stuck in the Middle.mp3">
+        <span class="track-number">3</span>
+        <span class="track-title">Stuck In The Middle</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+    <div class="track" data-src="Love to hate me.mp3">
+        <span class="track-number">4</span>
+        <span class="track-title">Love To Hate Me</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+    <div class="track" data-src="Fxxxboy.mp3">
+        <span class="track-number">5</span>
+        <span class="track-title">Fxxxboy</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+    <div class="track" data-src="crazy stupid love.mp3">
+        <span class="track-number">6</span>
+        <span class="track-title">CRAZY STUPID LOVE</span>
+        <span class="track-duration">0:00</span>
+        <button class="play-btn">▶</button>
+    </div>
+</div>
+</section>
+
+<audio id="main-player"></audio>
+
+<div class="music-player">
+    <div class="player-top">
+        <img src="love pulse ac.png">
+        <div class="player-info">
+            <div id="player-title">Not Playing</div>
+            <div class="progress-bar" id="progress-container">
+                <div id="progress" class="progress"></div>
+            </div>
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="shuffle" title="Shuffle">
+            <svg viewBox="0 0 24 24"><path d="M4 4h3l5.5 8-5.5 8H4v-2h2.5L12 12 6.5 6H4V4z"/><path d="M16 6h4v4l-2-2-2-2z"/></svg>
+        </button>
+        <button id="prev" title="Previous">
+            <svg viewBox="0 0 24 24"><path d="M6 6v12l8.5-6z"/><path d="M14 6h2v12h-2z"/></svg>
+        </button>
+        <button class="play-btn-main" id="play">
+            <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button id="next" title="Next">
+            <svg viewBox="0 0 24 24"><path d="M4 6h2v12h-2z"/><path d="M6 6l8.5 6-8.5 6z"/></svg>
+        </button>
+        <button id="loop" title="Loop">
+            <svg viewBox="0 0 24 24"><path d="M7 7h10v2H7zM7 15h10v2H7z"/><path d="M17 7l5 5-5 5"/></svg>
+        </button>
+    </div>
+</div>
+
+<script>
+const player = document.getElementById("main-player");
+const tracks = document.querySelectorAll(".track");
+const progress = document.getElementById("progress");
+const progressContainer = document.getElementById("progress-container");
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
+const playBtn = document.getElementById("play");
+
+let currentIndex = 0;
+let isShuffle = false;
+let loopMode = 0; // 0=off,1=loop track,2=loop all
+
+// Function to format seconds to mm:ss
+function formatTime(seconds){
+    let min = Math.floor(seconds/60);
+    let sec = Math.floor(seconds%60);
+    if(sec<10) sec='0'+sec;
+    return min+':'+sec;
+}
+
+// Load duration for each track
+tracks.forEach(track=>{
+    const src = track.dataset.src;
+    const audio = new Audio(src);
+    const durationSpan = track.querySelector(".track-duration");
+    audio.addEventListener("loadedmetadata", ()=>{
+        durationSpan.textContent = formatTime(audio.duration);
+    });
+});
+
+// Load song
+function loadSong(index){
+    const track = tracks[index];
+    tracks.forEach(t => t.classList.remove("active"));
+    track.classList.add("active");
+    player.src = track.dataset.src;
+    currentIndex = index;
+    document.getElementById("player-title").textContent = track.querySelector(".track-title").textContent;
+    updateTrackButtons();
+}
+
+// PLAY/PAUSE INLINE BUTTONS
+tracks.forEach((track, index) => {
+    const btn = track.querySelector(".play-btn");
+    
+    // Click on the track div also works
+    track.addEventListener("click", () => {
+        if(currentIndex === index && !player.paused){
+            player.pause();
+        } else {
+            loadSong(index);
+            player.play();
+        }
+        updatePlayIcon();
+        updateTrackButtons();
+    });
+
+    // Click on the button itself
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // prevent double event
+        if(currentIndex === index && !player.paused){
+            player.pause();
+        } else {
+            loadSong(index);
+            player.play();
+        }
+        updatePlayIcon();
+        updateTrackButtons();
+    });
+});
+
+function updateTrackButtons(){
+    tracks.forEach((track, i)=>{
+        const btn = track.querySelector(".play-btn");
+        if(i === currentIndex && !player.paused){
+            btn.textContent = "⏸"; // pause symbol
+        } else {
+            btn.textContent = "▶"; // play symbol
+        }
+    });
+}
+
+// Main bottom player play/pause
+playBtn.addEventListener("click", ()=>{
+    if(player.paused){ player.play(); } else { player.pause(); }
+    updatePlayIcon();
+    updateTrackButtons();
+});
+
+// Update bottom player icon
+function updatePlayIcon(){
+    const icon = document.getElementById("play-icon");
+    if(player.paused){
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>'; // play
+    } else {
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'; // pause
+    }
+}
+
+// Auto next / loop
+player.addEventListener("ended", ()=>{
+    if(loopMode===1){ player.play(); return; }
+    if(loopMode===2){ currentIndex = (currentIndex+1)%tracks.length; loadSong(currentIndex); player.play(); return; }
+    if(isShuffle) currentIndex = Math.floor(Math.random()*tracks.length);
+    else currentIndex = (currentIndex+1)%tracks.length;
+    loadSong(currentIndex);
+    player.play();
+    updatePlayIcon();
+});
+
+// Progress bar
+player.addEventListener("timeupdate", ()=>{
+    if(player.duration){
+        const percent = (player.currentTime/player.duration)*100;
+        progress.style.width = percent+'%';
+        currentTimeEl.textContent = formatTime(player.currentTime);
+        durationEl.textContent = formatTime(player.duration);
+    }
+});
+
+// Seek bar
+progressContainer.addEventListener("click",(e)=>{
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    player.currentTime = (clickX/width)*player.duration;
+});
+</script>
+
+</body>
+</html>
