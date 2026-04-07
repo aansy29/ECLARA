@@ -279,6 +279,13 @@ body {
     margin-top: 5px;
 }
 
+/* Remove mobile tap highlight and unwanted blue focus/underline */
+button, .track, .album-cover, .back-btn {
+    -webkit-tap-highlight-color: transparent; /* removes blue flash on tap */
+    outline: none; /* removes focus outline */
+    text-decoration: none; /* removes underline */
+    color: inherit; /* keeps original color */
+}
 
 </style>
 </head>

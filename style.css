@@ -57,7 +57,7 @@ nav ul li a {
 /* Hero Section */
 .hero {
     height: 100vh; /* Full viewport height */
-    background: url('hero.jpg') center/cover no-repeat; /* Use your image */
+    background: url('hero2.png') center/cover no-repeat; /* Use your image */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -478,7 +478,7 @@ nav ul li a {
 }
 
 .video-library {
-    padding: 80px 60px;
+    padding: 30px 60px;
 }
 
 .video-library h2 {
@@ -497,7 +497,7 @@ nav ul li a {
 
 .video-card video {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 00px;
 }
 
 .video-card p {
@@ -524,4 +524,45 @@ nav ul li a {
         align-items: center;
     }
 
+}
+
+
+/*LOVE PULSE WEBSITE*/
+
+.album-page {
+    padding: 20px;
+    color: white;
+}
+
+.album-header {
+    text-align: center;
+}
+
+.album-cover {
+    width: 200px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.tracklist {
+    margin-top: 20px;
+}
+
+.track {
+    margin-bottom: 15px;
+}
+
+audio {
+    width: 100%;
+}
+
+.album-card {
+    text-decoration: none;   /* removes underline */
+    color: inherit;          /* keeps normal text color */
+}
+
+.album-card:visited,
+.album-card:active {
+    color: inherit;
+    text-decoration: none;
 }
