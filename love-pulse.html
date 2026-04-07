@@ -6,6 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
+:root {
+    --accent: #ff4da6;
+    --accent2: #7b5cff;
+}
+
 body {
     background-color: #ffffff;
     color: #000;
@@ -48,7 +54,12 @@ body {
 }
 
 .track.active {
-    background-color: rgba(0,0,0,0.1);
+    background: linear-gradient(90deg, 
+        rgba(255, 0, 128, 0.2) 0%, 
+        rgba(47, 0, 255, 0.2) 50%,
+        rgba(0, 200, 255, 0.2) 100%
+    );
+    border-radius: 10px;
 }
 
 .track-number {
@@ -86,13 +97,19 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #fff;
+    background: linear-gradient(90deg, 
+        rgba(255, 0, 128, 0.2), 
+        rgba(47, 0, 255, 0.2),
+        rgba(0, 200, 255, 0.2)
+    );
     border-top: 1px solid rgba(0,0,0,0.1);
     padding: 15px 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border-radius: 12px 12px 0 0; /* optional: round the top edges */
+    backdrop-filter: blur(100px); /* optional: makes it look glassy */
 }
 
 .player-top {
@@ -129,7 +146,11 @@ body {
 .progress {
     width: 0%;
     height: 100%;
-    background: #000;
+    background: linear-gradient(90deg, 
+        rgb(246, 115, 180), 
+        rgb(121, 92, 248),
+        rgb(117, 215, 243)
+    );
 }
 
 /* TIME DISPLAY */
@@ -170,48 +191,147 @@ body {
     width: 36px;
     height: 36px;
 }
+
+/* MOBILE FULL PLAYER STYLES */
+.mobile-full-player {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.full-player-content {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.full-album-cover {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.close-btn {
+    font-size: 28px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.full-tracklist .track {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.full-tracklist .track.active {
+    background-color: rgba(0,0,0,0.1);
+}
+
+/* ONLY SHOW ON MOBILE */
+@media(min-width: 768px){
+    .mobile-full-player { display: none; }
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    position: sticky;
+    top: 0;
+    background: linear-gradient(90deg, 
+        rgba(250, 173, 211, 0.14), 
+        rgba(186, 171, 255, 0.281),
+        rgba(164, 230, 248, 0.236)
+    );
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    backdrop-filter: blur(3px); /* optional: makes it look frosted glass */
+}
+
+.back-btn {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.album-meta {
+    color: gray;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
 </style>
 </head>
 <body>
+
+<div class="top-bar">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <h1 class="page-title">LOVE PULSE</h1>
+</div>
 
 <section class="album-page">
 <div class="album-header">
     <img src="love pulse ac.png" class="album-cover">
     <h1>LOVE PULSE</h1>
+    <div class="album-meta">
+    <p>2026 • 6 songs • 18 min</p>
+</div>
 </div>
 
+
+
 <div class="tracklist">
-    <div class="track" data-src="Love, Maybe.mp3">
+    <div class="track" data-src="love_maybe.mp3">
         <span class="track-number">1</span>
         <span class="track-title">Love, Maybe</span>
         <span class="track-duration">0:00</span>
         <button class="play-btn">▶</button>
     </div>
-    <div class="track" data-src="Midas touch.mp3">
+    <div class="track" data-src="midas_touch.mp3">
         <span class="track-number">2</span>
         <span class="track-title">Midas Touch</span>
         <span class="track-duration">0:00</span>
         <button class="play-btn">▶</button>
     </div>
-    <div class="track" data-src="Stuck in the Middle.mp3">
+    <div class="track" data-src="stuck_in_the_middle.mp3">
         <span class="track-number">3</span>
         <span class="track-title">Stuck In The Middle</span>
         <span class="track-duration">0:00</span>
         <button class="play-btn">▶</button>
     </div>
-    <div class="track" data-src="Love to hate me.mp3">
+    <div class="track" data-src="love_to_hate_me.mp3">
         <span class="track-number">4</span>
         <span class="track-title">Love To Hate Me</span>
         <span class="track-duration">0:00</span>
         <button class="play-btn">▶</button>
     </div>
-    <div class="track" data-src="Fxxxboy.mp3">
+    <div class="track" data-src="fxxxboy.mp3">
         <span class="track-number">5</span>
         <span class="track-title">Fxxxboy</span>
         <span class="track-duration">0:00</span>
         <button class="play-btn">▶</button>
     </div>
-    <div class="track" data-src="crazy stupid love.mp3">
+    <div class="track" data-src="crazy_stupid_love.mp3">
         <span class="track-number">6</span>
         <span class="track-title">CRAZY STUPID LOVE</span>
         <span class="track-duration">0:00</span>
@@ -254,6 +374,38 @@ body {
             <svg viewBox="0 0 24 24"><path d="M7 7h10v2H7zM7 15h10v2H7z"/><path d="M17 7l5 5-5 5"/></svg>
         </button>
     </div>
+
+
+    
+<!-- MOBILE FULL PLAYER POPUP -->
+<div id="mobile-full-player" class="mobile-full-player">
+  <div class="full-player-content">
+    <div class="close-btn" id="close-mobile-player">&times;</div>
+    <img id="full-album-cover" src="love pulse ac.png" class="full-album-cover">
+    <div class="full-song-info">
+      <h2 id="full-song-title">Not Playing</h2>
+      <p id="full-song-artist">ÉCLARA</p>
+    </div>
+    <div class="full-progress-bar" id="full-progress-container">
+      <div id="full-progress" class="progress"></div>
+      <div class="time-display">
+        <span id="full-current-time">0:00</span>
+        <span id="full-duration">0:00</span>
+      </div>
+    </div>
+    <div class="full-controls">
+      <button id="full-prev">⏮</button>
+      <button id="full-play">▶</button>
+      <button id="full-next">⏭</button>
+    </div>
+    <div class="full-tracklist">
+      <!-- Playlist will be populated dynamically -->
+    </div>
+  </div>
+</div>
+
+
+
 </div>
 
 <script>
@@ -383,7 +535,10 @@ progressContainer.addEventListener("click",(e)=>{
     const clickX = e.offsetX;
     player.currentTime = (clickX/width)*player.duration;
 });
-</script>
 
+
+
+</script>
+    
 </body>
 </html>
